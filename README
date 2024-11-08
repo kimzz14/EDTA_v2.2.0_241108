@@ -1,0 +1,45 @@
+conda create -n EDTA_v2.2.0_241108
+
+source activate EDTA_v2.2.0_241108
+
+conda install edta
+#bioconda/noarch::edta-2.2.0-hdfd78af_1
+#bioconda/noarch::repeatmasker-4.1.5-pl5321hdfd78af_1
+#bioconda/noarch::repeatmodeler-2.0.5-pl5321hdfd78af_0 
+#bioconda/linux-64::repeatscout-1.0.6-hec16e2b_3
+
+Bug Fix - Could not open *.translation file for reading!
+
+Before
+----------------------------------------------------------
+my $genomeDB = $options{'database'};
+
+if ( -s $genomeDB ) {
+
+  $genomeDB = File::Spec->rel2abs($genomeDB);
+
+}elsif ( -s "$genomeDB.nsq" ){
+
+  $genomeDB = File::Spec->rel2abs("$genomeDB.nsq");
+
+}
+
+$genomeDB =~ s/(.+)\.n[nihs][rndiq]$/$1/;
+----------------------------------------------------------
+
+After
+----------------------------------------------------------
+my $genomeDB = $options{'database'};
+
+if ( -s $genomeDB ) {
+
+  $genomeDB = File::Spec->rel2abs($genomeDB);
+
+}elsif ( -s "$genomeDB.njs" ){
+
+  $genomeDB = File::Spec->rel2abs("$genomeDB.njs");
+
+}
+
+$genomeDB =~ s/(.+)\.n[nihsj][rndiqs]$/$1/;
+----------------------------------------------------------
